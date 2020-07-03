@@ -1,0 +1,144 @@
+RainWorld instance signature
+?? ?? ?? ?? 00 00 00 00 5A 27 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 90 01 00 00 20 03 00 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 12 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00 00 01 01 00 01 01 00 00 ?? 01 00 00 01 01 00 00 00 00 00 00 ?? 00 00 00
+
+RainWorld.processManager (ProcessManager) : 0x10
+	ProcessManager.currentMainLoop (MainLoopProcess) : 0xc
+		MainLoopProcess.ProcessID (int) : 0xc
+		RainWorldGame(MainLoopProcess).session (GameSession) : 0x40
+			GameSession.players (List<AbstractCreature>) :  // Getting from Player to Room is pretty annoying
+			
+			StoryGameSession(GameSession).saveState (SaveState) : 0x1c
+				SaveState.deathPersistentSaveData (DeathPersistentSaveData) : 0x2c
+					DeathPersistentSaveData.karma (int) : 0x2c
+					DeathPersistentSaveData.karmaCap (int) 0x30
+					DeathPersistentSaveData.reinforcedKarma (bool) 0x34
+					DeathPersistentSaveData.theMark (bool) 0x35
+					DeathPersistentSaveData.ascended (bool) : 0x37
+					DeathPersistentSaveData.pebblesHasIncreasedRedsKarmaCap (bool) 0x38
+					DeathPersistentSaveData.ghostsTalkedTo (int[]) 0x8 // updated on the karmaLadder screen ?
+					DeathPersistentSaveData.winState (WinState) 0x14
+						WinState... oh boy
+						WinState.endgameTrackers (List<EndgameTracker>) 0x8
+							List._items (T[]) 0x8
+								t[] -> t[0] (EndgameTracker) : 0x10
+									EndgameTracker.ID (int) 0x8
+									IntegerTracker.progress (int) 0x20
+									FloatTracker.progress (float) 0x20
+									BoolArrayTracker.progress (bool[]) 0x10
+									ListTracker.myList (List<int>) 0x10
+							List._size (int) 0xc
+							List._version (int) 0x10
+									
+				SaveState.miscWorldSaveData (MiscWorldSaveData) : 
+					MiscWorldSaveData.moonRevived = false;
+					MiscWorldSaveData.pebblesSeenGreenNeuron = false;
+					MiscWorldSaveData.memoryArraysFrolicked = false;
+					MiscWorldSaveData.SSaiConversationsHad = 0;
+					MiscWorldSaveData.SSaiThrowOuts = 0;
+					MiscWorldSaveData.privSlOracleState (often null)
+						SLOrcacleState
+							this.integers[0] // Encounters
+							this.integers[1] // Encounters with mark
+							this.integers[2] // Tot neurons
+							this.integers[3] // Neuron talks
+							this.integers[4] // Neurons given
+								
+				SaveState.regionStates (RegionState[]) : 0x10
+					RegionState.roomsVisited (bool[]) : 0x34
+
+		RainWorldGame(MainLoopProcess).cameras (RoomCamera[0]) : 0x54 -> 0x10
+			RoomCamera.loadingRoom (Room) : 0xe8
+			RoomCamera.room (Room) : 0x104
+				Room.abstractRoom (AbstractRoom) : 0x98
+					AbstractRoom.name (String) : 0xc
+						String.len (int) : 0x8
+						String.data (UTF16) : 0xc
+					AbstractRoom.index (int) : 0x34
+				
+				Room.regionGate (RegionGate) : 0x88
+					RegionGate.mode (int) : 0x38
+				Room.shelterDoor (ShelterDoor) : 0x8c
+					ShelterDoor.lastClosed (bool) : 0x54
+						(not properly initialized until a call to Update())
+					ShelterDoor.closedFac (float) : 0x34
+				
+				Room.updateList (List<UpdatableAndDeletable>) : 0x9c
+					List.elements[] : 0x8
+					(specific to SB_L01)
+					elements[] -> VoidSeaScene : 0x18
+						VoidSeaScene.worms (List<VoidWorm>) : 0x30
+							List.elements[] : 0x8
+							(specific to mainworm)
+							elements[] -> VoidWorm : 0x10
+								VoidWorm.behavior (VoidWorm.MainWormBehavior) : 0x50
+									MainWormBehavior.phase (enum:int) : 0x1c
+									
+			RoomCamera.followAbstractCreature (AbstractCreature) : 0xe4
+		
+		RainWorldGame.overWorld (Overworld) : 0x28
+			Overworld.activeWorld (World) : 0x10
+				World.Region (Region) : 0x54
+					Region.regionNumber (int) : 0x24
+					Region.firstRoomIndex (int) : 0x20
+					Region.name (string) : 0x8
+				World.worldGhost : 0x64
+		
+		RainWorldGame.sawAGhost (int) : 0x80 // ID of ghost met, set before cycle exits, the ghostsTalkedTo array only gets updated when the karmaLadder screen takes over
+
+	ProcessManager.upcomingProcess (Nullable ProcessID) : 0x3c (value) 0x40 (ispresent)
+
+	ProcessManager.menuSetup (MenuSetup) : 0x28
+		MenuSetup.startGameCondition : 0xc
+
+RainWorld.progression (PlayerProgression): 0x18
+	PlayerProgression.miscProgressionData (MiscProgressionData): 0x14
+		MiscProgressionData.integers[0] (currentlySelectedSinglePlayerSlugcat): 0x1c -> 0x10
+		
+
+Todo:
+
+	track visited rooms -- done
+
+	track passages -- done
+	
+	the mark -- done
+	
+	better options for starves and shelters and karma
+	
+	hit echo
+	
+	Pebs n moon stuff
+
+
+start:
+	vars.processID.Current == vars.ProcessIDValue["SlugcatSelect"]
+	SlugcatSelectMenu
+	
+	
+	manager.menuSetup.startGameCondition = ProcessManager.MenuSetup.StoryGameInitCondition.New (1)
+	type new game
+	
+	manager.rainWorld.progression.miscProgressionData.integers[0] == cat
+	right slugcat number
+	
+	
+	ProcessManager.upcomingProcess (nullable int) == game
+
+
+Splits:
+	Room: 
+		... 
+		get mark from pebbles
+		accomplish "helped pebbles"
+		accomplish "helped moon"
+		hit echo
+
+
+
+
+
+
+
+
+
+
