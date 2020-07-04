@@ -29,14 +29,14 @@ RainWorld.processManager (ProcessManager) : 0x10
 							List._size (int) 0xc
 							List._version (int) 0x10
 									
-				SaveState.miscWorldSaveData (MiscWorldSaveData) : 
-					MiscWorldSaveData.moonRevived = false;
-					MiscWorldSaveData.pebblesSeenGreenNeuron = false;
-					MiscWorldSaveData.memoryArraysFrolicked = false;
-					MiscWorldSaveData.SSaiConversationsHad = 0;
-					MiscWorldSaveData.SSaiThrowOuts = 0;
-					MiscWorldSaveData.privSlOracleState (often null)
-						SLOrcacleState
+				SaveState.miscWorldSaveData (MiscWorldSaveData) : 0x28
+					MiscWorldSaveData.moonRevived (bool) : 0x18
+					MiscWorldSaveData.pebblesSeenGreenNeuron (bool) : 0x19
+					MiscWorldSaveData.memoryArraysFrolicked (bool) : 0x1a
+					MiscWorldSaveData.SSaiConversationsHad (int) : 0x14
+					MiscWorldSaveData.SSaiThrowOuts (int) : 0x14
+					MiscWorldSaveData.privSlOracleState (SlOrcacleState) // Typo lmao: 0x8
+						SLOrcacleState.integers (int[]) : 0x8
 							this.integers[0] // Encounters
 							this.integers[1] // Encounters with mark
 							this.integers[2] // Tot neurons
@@ -45,6 +45,9 @@ RainWorld.processManager (ProcessManager) : 0x10
 								
 				SaveState.regionStates (RegionState[]) : 0x10
 					RegionState.roomsVisited (bool[]) : 0x34
+				
+				SaveState.malnourished : 0x3c
+				SaveState.redExtraCycles : 0x68
 
 		RainWorldGame(MainLoopProcess).cameras (RoomCamera[0]) : 0x54 -> 0x10
 			RoomCamera.loadingRoom (Room) : 0xe8
@@ -132,13 +135,4 @@ Splits:
 		accomplish "helped pebbles"
 		accomplish "helped moon"
 		hit echo
-
-
-
-
-
-
-
-
-
 
