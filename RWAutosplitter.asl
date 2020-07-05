@@ -447,7 +447,12 @@ update {
 
 start {
 	// Is in CharacterSelect and NOW has upcoming process && is game && start new game && right slugcat
-	return vars.processID.Current == 18 && vars.hasUpcomingProcess.Changed && vars.hasUpcomingProcess.Current && vars.upcomingProcessID.Current == 1 && vars.startGameCondition.Current == 1 && (settings["start_any"] ||  (settings.ContainsKey("start_"+vars.selectedSlugcat.Current) && settings["start_"+vars.selectedSlugcat.Current]));
+	if(vars.processID.Current == 18 && vars.hasUpcomingProcess.Changed && vars.hasUpcomingProcess.Current && vars.upcomingProcessID.Current == 1 && vars.startGameCondition.Current == 1 && (settings["start_any"] ||  (settings.ContainsKey("start_"+vars.selectedSlugcat.Current) && settings["start_"+vars.selectedSlugcat.Current]))){
+		vars.cycleStartWatchers.ResetAll();
+		vars.ingameWatchers.ResetAll();
+		vars.cycleEndWatchers.ResetAll();
+		return true;
+	}
 }
 
 isLoading {}
