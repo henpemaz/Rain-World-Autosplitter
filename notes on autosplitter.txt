@@ -106,33 +106,15 @@ Todo:
 	
 	the mark -- done
 	
-	better options for starves and shelters and karma
+	better options for starves and shelters and karma -- done
 	
-	hit echo
+	hit echo -- done
 	
-	Pebs n moon stuff
-
-
-start:
-	vars.processID.Current == vars.ProcessIDValue["SlugcatSelect"]
-	SlugcatSelectMenu
+	Pebs n moon stuff -- done
 	
 	
-	manager.menuSetup.startGameCondition = ProcessManager.MenuSetup.StoryGameInitCondition.New (1)
-	type new game
-	
-	manager.rainWorld.progression.miscProgressionData.integers[0] == cat
-	right slugcat number
-	
-	
-	ProcessManager.upcomingProcess (nullable int) == game
-
-
-Splits:
-	Room: 
-		... 
-		get mark from pebbles
-		accomplish "helped pebbles"
-		accomplish "helped moon"
-		hit echo
+	Void Sea triggers have weird names
+	missing trigger for when camera starts following you
+	missing trigger for when worm lets you go and disappears
+	missing trigger for egg scenario
 
