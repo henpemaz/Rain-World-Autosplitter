@@ -63,7 +63,9 @@ startup {
 	settings.Add("moonRevived", false, "Moon Revived (Hunter only)", "common");
 	settings.Add("pebblesSeenGreenNeuron", false, "Pebbles Seen Green Neuron (Hunter only)", "common");
 	settings.Add("pebblesHasIncreasedRedsKarmaCap", false, "Pebbles Has Increased Reds Karma Cap (Hunter only)", "common");
-	settings.Add("ascended", true, "Ascended", "common");
+	settings.Add("voidSeaMode", true, "Void Sea (Time w/o loads end)", "common");
+	settings.SetToolTip("voidSeaMode", "Splits on the transition from the last screen in SB_L01 into the Void Sea");
+	settings.Add("ascended", true, "Ascended (End)", "common");
 	settings.SetToolTip("ascended", "Splits when you have ascended and the game exits");
 	
 	
@@ -114,7 +116,7 @@ startup {
 	// VOID SEA triggers
 	settings.Add("voidsea", false, "Void Sea triggers");
 	settings.SetToolTip("voidsea", "Splits in the final room of the game as the encounter with the Void Worm progresses");
-	// settings.Add("worms_0", false, "Idle", "voidsea"); // would be buggy across restarts
+	// settings.Add("worms_0", false, "Idle", "voidsea"); // default state, would be buggy across restarts
 	settings.Add("worm_1", false, "Get To Player", "voidsea");
 	settings.Add("worm_2", false, "Looking", "voidsea");
 	settings.Add("worm_3", false, "Attaching String", "voidsea");
@@ -288,10 +290,9 @@ init {
 	vars.pebblesHasIncreasedRedsKarmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x38));
 	vars.moonRevived = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x18));
 	vars.pebblesSeenGreenNeuron = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x19));
-	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));
-	//vars.extraCycles = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x68)); // pebblesHasIncreasedRedsKarmaCap is probably a better flag
-	
+	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));	
 	vars.karmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x35)); // Special fella can be updated when ghost screen loads
+	vars.voidSeaMode = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x54, 0x10, 0x160));
 
 	vars.ingameWatchers = new MemoryWatcherList() {
 		vars.roomName,
@@ -303,8 +304,8 @@ init {
 		vars.moonRevived,
 		vars.pebblesSeenGreenNeuron,
 		vars.moonNeuronsGiven,
-		//vars.extraCycles,
 		vars.karmaCap,
+		vars.voidSeaMode,
 		};
 	
 	
@@ -476,7 +477,12 @@ split {
 		return true;
 	}
 	
-	// VOID SEA TRIGGERS
+	// VOID SEA MODE TRIGGER
+	if(vars.voidSeaMode.Changed && vars.voidSeaMode.Current && settings["voidSeaMode"]){
+		return true;
+	}
+
+	// VOID SEA WORM TRIGGERS
 	if(vars.wormPhase.Changed && settings.ContainsKey("worm_"+vars.wormPhase.Current) && settings["worm_"+vars.wormPhase.Current]){
 		return true;
 	}
@@ -484,9 +490,11 @@ split {
 	// PASSAGE TRIGGERS
 	if(vars.trackersChangedAny){
 		for(int i = 0; i<10; i++){
-			if(vars.trackersChanged[i] && settings.ContainsKey("ach_"+i) && settings["ach_"+i]){
+			if(vars.trackersChanged[i]){
 				vars.trackersChanged[i] = false;
-				return true;
+				if(settings.ContainsKey("ach_"+i) && settings["ach_"+i]){
+					return true;
+				}
 			}
 			if(i==9){
 				vars.trackersChangedAny = false;
@@ -503,37 +511,51 @@ split {
 	// TEN KARMA TRIGGER
 	if(vars.karmaCap.Changed && vars.karmaCap.Current == 9){
 		vars.karma.Update(game);
-		return settings["tenKarma"];
+		if(settings["tenKarma"]){
+			return true;
+		}
 	}	
 	// THE MARK TRIGGER
 	if(vars.theMark.Changed && vars.theMark.Current == true){
 		vars.theMark.Update(game);
-		return settings["theMark"];
+		if(settings["theMark"]){
+			return true;
+		}
 	}	
 	// GIVE NEURON TO MOON TRIGGER
 	if(vars.moonNeuronsGiven.Changed && vars.moonNeuronsGiven.Current == 1){
 		vars.moonNeuronsGiven.Update(game);
-		return settings["moonNeuron"];
+		if(settings["moonNeuron"]){
+			return true;
+		}
 	}	
 	// REVIVE MOON TRIGGER
 	if(vars.moonRevived.Changed && vars.moonRevived.Current == true){
 		vars.moonRevived.Update(game);
-		return settings["moonRevived"];
+		if(settings["moonRevived"]){
+			return true;
+		}
 	}
 	// PEBBLES SEEN GREEN NEURON TRIGGER
 	if(vars.pebblesSeenGreenNeuron.Changed && vars.pebblesSeenGreenNeuron.Current == true){
 		vars.pebblesSeenGreenNeuron.Update(game);
-		return settings["pebblesSeenGreenNeuron"];
+		if(settings["pebblesSeenGreenNeuron"]){
+			return true;
+		}
 	}
 	// PEBBLES HAS INCREASED REDS KARMA CAP TRIGGER
 	if(vars.pebblesHasIncreasedRedsKarmaCap.Changed && vars.pebblesHasIncreasedRedsKarmaCap.Current == true){
 		vars.pebblesHasIncreasedRedsKarmaCap.Update(game);
-		return settings["pebblesHasIncreasedRedsKarmaCap"];
+		if(settings["pebblesHasIncreasedRedsKarmaCap"]){
+			return true;
+		}
 	}
 	// ASCENDED TRIGGER
 	if(vars.ascended.Changed && vars.ascended.Current == true){
 		vars.ascended.Update(game);
-		return settings["ascended"];
+		if(settings["ascended"]){
+			return true;
+		}
 	}
 
 }
