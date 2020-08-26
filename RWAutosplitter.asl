@@ -477,14 +477,17 @@ split {
 		return true;
 	}
 	
-	// VOID SEA MODE TRIGGER
-	if(vars.voidSeaMode.Changed && vars.voidSeaMode.Current && settings["voidSeaMode"]){
-		return true;
-	}
+	// VOID SEA
+	if(vars.roomName.Current != null && vars.roomName.Current == "SB_L01"){ 
+		// VOID SEA MODE TRIGGER
+		if(vars.voidSeaMode.Changed && vars.voidSeaMode.Current && settings["voidSeaMode"]){
+			return true;
+		}
 
-	// VOID SEA WORM TRIGGERS
-	if(vars.wormPhase.Changed && settings.ContainsKey("worm_"+vars.wormPhase.Current) && settings["worm_"+vars.wormPhase.Current]){
-		return true;
+		// VOID SEA WORM TRIGGERS
+		if(vars.wormPhase.Changed && settings.ContainsKey("worm_"+vars.wormPhase.Current) && settings["worm_"+vars.wormPhase.Current]){
+			return true;
+		}
 	}
 	
 	// PASSAGE TRIGGERS
