@@ -530,7 +530,7 @@ split {
 	}
 
 	// EVER MET MOON TRIGGER
-	if(vars.moonConversations.Changed && vars.moonNeuronsGiven.Current == 1){
+	if(vars.moonConversations.Changed && vars.moonConversations.Current == 1){
 		vars.moonConversations.Update(game);
 		if(settings["moonMet"]){
 			return true;
