@@ -59,6 +59,7 @@ startup {
 	settings.Add("common", true, "Milestones");
 	settings.Add("tenKarma", false, "Max Karma", "common");
 	settings.Add("theMark", false, "The Mark (Monk/Surv)", "common");
+	settings.Add("moonMet", false, "Meet Moon", "common");
 	settings.Add("moonNeuron", false, "Give Neuron to Moon (Monk/Surv)", "common");
 	settings.Add("moonRevived", false, "Moon Revived (Hunter only)", "common");
 	settings.Add("pebblesSeenGreenNeuron", false, "Pebbles Seen Green Neuron (Hunter only)", "common");
@@ -290,7 +291,8 @@ init {
 	vars.pebblesHasIncreasedRedsKarmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x38));
 	vars.moonRevived = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x18));
 	vars.pebblesSeenGreenNeuron = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x19));
-	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));	
+	vars.moonConversations = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x10));
+	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));
 	vars.karmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x35)); // Special fella can be updated when ghost screen loads
 	vars.voidSeaMode = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x54, 0x10, 0x160));
 
@@ -303,6 +305,7 @@ init {
 		vars.pebblesHasIncreasedRedsKarmaCap,
 		vars.moonRevived,
 		vars.pebblesSeenGreenNeuron,
+		vars.moonConversations,
 		vars.moonNeuronsGiven,
 		vars.karmaCap,
 		vars.voidSeaMode,
@@ -521,7 +524,15 @@ split {
 		if(settings["theMark"]){
 			return true;
 		}
-	}	
+	}
+
+	// EVER MET MOON TRIGGER
+	if(vars.moonConversations.Changed && vars.moonNeuronsGiven.Current == 1){
+		vars.moonConversations.Update(game);
+		if(settings["moonMet"]){
+			return true;
+		}
+	}
 	// GIVE NEURON TO MOON TRIGGER
 	if(vars.moonNeuronsGiven.Changed && vars.moonNeuronsGiven.Current == 1){
 		vars.moonNeuronsGiven.Update(game);
