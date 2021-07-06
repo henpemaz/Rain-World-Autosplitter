@@ -5,8 +5,14 @@ RainWorld.processManager (ProcessManager) : 0x10
 	ProcessManager.currentMainLoop (MainLoopProcess) : 0xc
 		MainLoopProcess.ProcessID (int) : 0xc
 		RainWorldGame(MainLoopProcess).session (GameSession) : 0x40
-			GameSession.players (List<AbstractCreature>) :  // Getting from Player to Room is pretty annoying
-			
+			GameSession.players (List<AbstractCreature>) : 0xc // Getting from Player to Room is pretty annoying
+				List._items (T[]) 0x8
+					t[] -> t[0] (Player) : 0x10
+						Player.BodyChunks (BodyChunks[]) : 0x20
+							t[] -> t[0] (BodyChunks) : 0x10
+								BodyChunks.pos : 0x10
+									(struct.float).x : 0x0 (not a pointer)
+
 			StoryGameSession(GameSession).saveState (SaveState) : 0x1c
 				SaveState.deathPersistentSaveData (DeathPersistentSaveData) : 0x2c
 					DeathPersistentSaveData.karma (int) : 0x2c
