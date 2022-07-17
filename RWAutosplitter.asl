@@ -3,6 +3,13 @@ state("RainWorld", "steam15") {}
 startup {
 	// Autosplitter by Henpemaz, for thanks suggestions complaints or corrections, reach me up on Discord Skype Github or whatever, or just submit a PR directly on GitHub
 	
+	//Updated: 0717_2022 by ICED, ICED#9406 on Discord
+	//Added Log writing as needed, changed tool tip to include skipping the intro with the S key
+	//Can now start the game from loading a save file
+	//Now no longer splits a second time for room splits if you enter a room, split, then die/ quit/ hit an echo, then enter that room again
+	
+	vars.Log = (Action<object>)(output => print("|Rain World| " + output));
+
 	//print("Startup");
 	
 	// If only people had invented something like Enums in C#...
@@ -47,7 +54,7 @@ startup {
 	
 	// START condition
 	settings.Add("start", true, "Start condition");
-	settings.SetToolTip("start", "Starts the timer if you have the option selected when using one of the following slugcats.");
+	settings.SetToolTip("start", "Starts the timer when using one of the following slugcats, hold the S key to skip the intro cutscene on file creation.");
 	settings.Add("start_0", false, "Survivor", "start"); 
 	settings.Add("start_1", false, "Monk", "start"); 
 	settings.Add("start_2", false, "Hunter", "start"); 
@@ -214,10 +221,18 @@ startup {
 	foreach (string room in new List<string>(){"SS_D08", "SS_S04", "SS_E08", "SS_D07", "SS_L01", "SS_AI", "SS_E07", "SS_E06", "SS_C08", "SS_A14", "SS_LAB13", "SS_A01", "SS_D02", "SS_LAB8", "SS_LAB1", "SS_LAB2", "SS_LAB6", "SS_A17", "SS_E03", "SS_LAB7", "SS_LAB9", "SS_LAB3", "SS_LAB12", "SS_LAB11", "SS_LAB10", "SS_LAB5", "SS_LAB4", "SS_E05", "SS_I03", "SS_C07", "SS_C03", "SS_B02", "SS_S05", "SS_A16", "SS_A03", "SS_A15", "SS_E02", "SS_A04", "SS_B06", "SS_A11", "SS_D03", "SS_D04", "SS_C04", "SS_C06", "SS_H01", "SS_F02", "SS_S02", "SS_B03", "SS_E01", "SS_F01", "SS_C02", "SS_I02", "SS_A10", "SS_A09", "SS_B01", "SS_A08", "SS_A19", "SS_S01", "SS_B05", "SS_D06", "SS_A18", "SS_F03", "SS_B04", "SS_S03", "SS_A13", "SS_E04", "SS_D05"} .OrderBy(s => s)){
 		settings.Add(room, false, room, "SS_parent");
 	}
+
+	vars.CompletedSplits = new HashSet<string>();
 	
 }
 
 shutdown{}
+
+onStart
+{
+
+	vars.CompletedSplits.Clear();
+}
 
 init {
 	//print("Init");
@@ -446,15 +461,25 @@ update {
 		vars.karmaCap.Update(game); // This guy can also change here
 	}
 	
+	var RoomID = vars.roomName.Current;
+	current.Roomin = RoomID;
+	
+	var ProID = vars.processID.Current;
+	current.Proin = ProID;	
+	//vars.Log("Scene changed: " + current.Proin);
+	
+	//var igt = current.IGT;
+	//vars.Log("Current Time: " + current.IGT);
 	
 }
 
 start {
 	// Is in CharacterSelect and NOW has upcoming process && is game && start new game && right slugcat
-	if(vars.processID.Current == 18 && vars.hasUpcomingProcess.Changed && vars.hasUpcomingProcess.Current && vars.upcomingProcessID.Current == 1 && vars.startGameCondition.Current == 1 && (settings["start_any"] ||  (settings.ContainsKey("start_"+vars.selectedSlugcat.Current) && settings["start_"+vars.selectedSlugcat.Current]))){
+	if(vars.processID.Current == 18 && vars.hasUpcomingProcess.Changed && vars.hasUpcomingProcess.Current && vars.upcomingProcessID.Current == 1 && (settings["start_any"] ||  (settings.ContainsKey("start_"+vars.selectedSlugcat.Current) && settings["start_"+vars.selectedSlugcat.Current]))){
 		vars.cycleStartWatchers.ResetAll();
 		vars.ingameWatchers.ResetAll();
 		vars.cycleEndWatchers.ResetAll();
+		vars.CompletedSplits.Clear();
 		return true;
 	}
 }
@@ -465,8 +490,20 @@ reset {}
 
 split {
 	// ROOM TRIGGERS
-	if(vars.roomName.Changed && (settings["rooms_all"] || (settings.ContainsKey(vars.roomName.Current) && settings[vars.roomName.Current])) && (!settings["rooms_once"] || !vars.roomVisited())){
-		return true;
+	if(vars.roomName.Changed && (settings["rooms_all"] || (settings.ContainsKey(vars.roomName.Current) && settings[vars.roomName.Current])) && (!settings["rooms_once"] || !vars.roomVisited()))
+	{
+		
+		//vars.Log("Room changed: " + old.Roomin + " -> " + current.Roomin);
+		var Ri = current.Roomin;
+		
+		if (!vars.CompletedSplits.Contains(Ri)|| settings["rooms_all"])
+		{
+			vars.CompletedSplits.Add(Ri);
+
+			return true;
+	
+		}
+		
 	}
 	
 	// GATE TRIGGERS
@@ -573,4 +610,3 @@ split {
 	}
 
 }
-
