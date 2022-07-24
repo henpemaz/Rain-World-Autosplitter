@@ -66,9 +66,10 @@ startup {
 	settings.Add("common", true, "Milestones");
 	settings.Add("tenKarma", false, "Max Karma", "common");
 	settings.Add("theMark", false, "The Mark (Monk/Surv)", "common");
-	settings.Add("moonMet", false, "Meet Moon", "common");
+	settings.Add("moonMet", false, "Meet Moon (Moon%, Monk/Surv)", "common");
 	settings.Add("moonNeuron", false, "Give Neuron to Moon (Monk/Surv)", "common");
 	settings.Add("moonRevived", false, "Moon Revived (Hunter only)", "common");
+	settings.Add("moonReached", false, "Moon Reached (Hunter, Moon%)", "common");
 	settings.Add("pebblesSeenGreenNeuron", false, "Pebbles Seen Green Neuron (Hunter only)", "common");
 	settings.Add("pebblesHasIncreasedRedsKarmaCap", false, "Pebbles Has Increased Reds Karma Cap (Hunter only)", "common");
 	settings.Add("voidSeaMode", true, "Void Sea (Time w/o loads end)", "common");
@@ -305,6 +306,7 @@ init {
 	vars.theMark = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x35));
 	vars.pebblesHasIncreasedRedsKarmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x38));
 	vars.moonRevived = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x18));
+	vars.playerX = new MemoryWatcher<float>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0xc, 0x8, 0x10, 0x2c, 0x20, 0x10, 0x10));
 	vars.pebblesSeenGreenNeuron = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x19));
 	vars.moonConversations = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x10));
 	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));
@@ -318,6 +320,7 @@ init {
 		vars.wormPhase,
 		vars.theMark,
 		vars.pebblesHasIncreasedRedsKarmaCap,
+		vars.playerX,
 		vars.moonRevived,
 		vars.pebblesSeenGreenNeuron,
 		vars.moonConversations,
@@ -425,6 +428,10 @@ init {
 	};
 	vars.updateTrackerStatus = updateTrackerStatus;
 	
+	
+	// Moon Reached trigger has no ingame flag and needs a flag
+	vars.moonReached = false;
+	//vars.frameCount = 0; // old testing code
 }
 
 exit {
@@ -480,6 +487,7 @@ start {
 		vars.ingameWatchers.ResetAll();
 		vars.cycleEndWatchers.ResetAll();
 		vars.CompletedSplits.Clear();
+		vars.moonReached = false;
 		return true;
 	}
 }
@@ -565,7 +573,6 @@ split {
 			return true;
 		}
 	}
-
 	// EVER MET MOON TRIGGER
 	if(vars.moonConversations.Changed && vars.moonConversations.Current == 1){
 		vars.moonConversations.Update(game);
@@ -584,6 +591,13 @@ split {
 	if(vars.moonRevived.Changed && vars.moonRevived.Current == true){
 		vars.moonRevived.Update(game);
 		if(settings["moonRevived"]){
+			return true;
+		}
+	}
+	// REACH MOON TRIGGER (moon%, Hunter)
+	if(vars.moonReached == false && vars.roomName.Current != null && vars.roomName.Current == "SL_AI" && vars.playerX.Changed && vars.playerX.Current >= 1160f){
+		vars.moonReached = true;
+		if(settings["moonReached"]){
 			return true;
 		}
 	}
