@@ -149,6 +149,82 @@ startup {
 	settings.Add("gate_6", false, "Closed", "gates"); // Most people don't stay around long enough to see this
 
 
+    // UNLOCK splits
+	settings.Add("Sandbox Unlocks", false, "Sandbox Unlocks");
+	settings.Add("All unlocks", false, "Split for any unlock -- overrides other settings", "Sandbox Unlocks");
+	settings.Add("All hunter sandbox", false, "Only hunter sandbox", "Sandbox Unlocks");
+	settings.Add("All levels", false, "All levels", "Sandbox Unlocks");
+	
+    settings.Add("Individual Tokens", false, "Sandbox", "Sandbox Unlocks");
+	settings.Add("BlueLizard", false, "Blue Lizard", "Individual Tokens");
+	settings.Add("WhiteLizard", false, "White Lizard", "Individual Tokens");
+	settings.Add("BlackLizard", false, "Black Lizard", "Individual Tokens");
+	settings.Add("YellowLizard", false, "Yellow Lizard", "Individual Tokens");
+	settings.Add("Salamander", false, "Axolotl", "Individual Tokens");
+	settings.Add("CicadaA", false, "Squid cicada", "Individual Tokens");
+	settings.Add("Snail", false, "Snail Turtle", "Individual Tokens");
+	settings.Add("Leech", false, "Red Leech", "Individual Tokens");
+	settings.Add("SeaLeech", false, "Blue Leech", "Individual Tokens");
+	settings.Add("PoleMimic", false, "Pole Plant", "Individual Tokens");
+	
+	settings.Add("Scavenger", false, "Scavenger", "Individual Tokens");
+	settings.Add("VultureGrub", false, "Vulture Grub", "Individual Tokens");
+	settings.Add("Vulture", false, "Vulture", "Individual Tokens");
+	settings.Add("MediumCentipede", false, "Small and Medium Centipede", "Individual Tokens");
+	settings.Add("BigCentipede", false, "Overgrown Centipede", "Individual Tokens");
+	settings.Add("Centiwing", false, "Centiwing", "Individual Tokens");
+	
+	settings.Add("TubeWorm", false, "Grapple Worm", "Individual Tokens");
+	settings.Add("Hazer", false, "Hazer", "Individual Tokens");
+	settings.Add("LanternMouse", false, "Lantern Mouse", "Individual Tokens");
+	settings.Add("Spider", false, "Coalescipede", "Individual Tokens");
+	settings.Add("BigSpider", false, "Spider", "Individual Tokens");
+	
+	settings.Add("BrotherLongLegs", false, "Brother Long Legs", "Individual Tokens");
+	settings.Add("DaddyLongLegs", false, "Daddy Long Legs", "Individual Tokens");
+	settings.Add("EggBug", false, "Egg Bug", "Individual Tokens");
+	settings.Add("Dropbug", false, "Dropwig", "Individual Tokens");
+	settings.Add("BigNeedleWorm", false, "Noodlefly", "Individual Tokens");
+	settings.Add("Jetfish", false, "Jetfish", "Individual Tokens");
+	settings.Add("FireSpear", false, "Explosive Spear", "Individual Tokens");
+	settings.Add("ScavengerBomb", false, "Grenade", "Individual Tokens");
+	settings.Add("SporePlant", false, "Beehive", "Individual Tokens");
+	settings.Add("Lantern", false, "Lantern Stone", "Individual Tokens");
+	settings.Add("FlyLure", false, "Batnip", "Individual Tokens");
+	settings.Add("Mushroom", false, "Mushroom", "Individual Tokens");
+	settings.Add("FlareBomb", false, "Flash Fruit", "Individual Tokens");
+	settings.Add("Puffball", false, "Spore Bomb", "Individual Tokens");
+	settings.Add("Waternut", false, "Water Fruit", "Individual Tokens");
+	settings.Add("FirecrackerPlant", false, "Popper", "Individual Tokens");
+	settings.Add("DangleFruit", false, "Blue Fruit", "Individual Tokens");
+	settings.Add("JellyFish", false, "Jellyfish", "Individual Tokens");
+	settings.Add("BubbleGrass", false, "Bubbleweed", "Individual Tokens");
+	settings.Add("SlimeMold", false, "Slime Mold", "Individual Tokens");
+		
+	settings.Add("CyanLizard", false, "Cyan Lizard", "Individual Tokens");
+	settings.Add("RedLizard", false, "Red Lizard", "Individual Tokens");
+	settings.Add("TentaclePlant", false, "Monster Kelp", "Individual Tokens");
+	settings.Add("KingVulture", false, "King Vulture", "Individual Tokens");
+	settings.Add("RedCentipede", false, "Red Centipede", "Individual Tokens");
+	settings.Add("SpitterSpider", false, "Red Spider", "Individual Tokens");
+	settings.Add("MirosBird", false, "MirosBird", "Individual Tokens");
+	settings.Add("Deer", false, "Raindeer", "Individual Tokens");
+	settings.Add("BigEel", false, "Leviathan", "Individual Tokens");
+	
+	settings.Add("Individual Levels", false, "Levels", "Sandbox Unlocks");
+	settings.Add("SU_Token", false, "Outskirts", "Individual Levels");
+	settings.Add("HI_Token", false, "Industrial Complex", "Individual Levels");
+	settings.Add("CC_Token", false, "Chimney Canopy", "Individual Levels");
+	settings.Add("GW_Token", false, "Garbage Wastes", "Individual Levels");
+	settings.Add("SL_Token", false, "Shoreline", "Individual Levels");
+	settings.Add("SH_Token", false, "Shaded Citadel", "Individual Levels");
+	settings.Add("DS_Token", false, "Drainage System", "Individual Levels");
+	settings.Add("SI_Token", false, "Sky Islands", "Individual Levels");
+	settings.Add("LF_Token", false, "Farm Arrays", "Individual Levels");
+	settings.Add("UW_Token", false, "The Exterior", "Individual Levels");
+	settings.Add("SB_Token", false, "Subterranean", "Individual Levels");
+	settings.Add("SS_Token", false, "Five Pebbles", "Individual Levels");
+	
 	// ROOM splits
 	settings.Add("rooms", false, "Rooms");
 	settings.SetToolTip("rooms", "Splits when entering the selected rooms. You might want a map with room names. Hey I've got a map with room names, its in my github.");
@@ -312,7 +388,85 @@ init {
 	vars.moonNeuronsGiven = new MemoryWatcher<int>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x28, 0x8, 0x8, 0x20));
 	vars.karmaCap = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x40, 0x1c, 0x2c, 0x35)); // Special fella can be updated when ghost screen loads
 	vars.voidSeaMode = new MemoryWatcher<bool>(new DeepPointer((IntPtr)pm + 0xc, 0x54, 0x10, 0x160));
-
+	
+	//vars.SandboxTokens00 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x10));//Slugcat -- UNUSED
+	//vars.SandboxTokens01 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x11));//GreenLizard -- UNUSED
+	//vars.SandboxTokens02 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x12));//PinkLizard -- UNUSED
+	vars.SandboxTokens03 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x13));//BlueLizard
+	vars.SandboxTokens04 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x14));//WhiteLizard
+	vars.SandboxTokens05 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x15));//BlackLizard
+	vars.SandboxTokens06 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x16));//YellowLizard
+	vars.SandboxTokens07 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x17));//CyanLizard
+	vars.SandboxTokens08 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x18));//RedLizard
+	vars.SandboxTokens09 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x19));//Salamander
+	//vars.SandboxTokens10 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1A));//Fly --UNUSED
+	vars.SandboxTokens11 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1B));//CicadaA
+	//vars.SandboxTokens12 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1C));//CicadaB -- UNUSED
+	vars.SandboxTokens13 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1D));//Snail
+	vars.SandboxTokens14 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1E));//Leech
+	vars.SandboxTokens15 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x1F));//SeaLeech
+	vars.SandboxTokens16 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x20));//PoleMimic
+	vars.SandboxTokens17 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x21));//TentaclePlant
+	vars.SandboxTokens18 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x22));//Scavenger
+	vars.SandboxTokens19 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x23));//VultureGrub
+	vars.SandboxTokens20 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x24));//Vulture
+	vars.SandboxTokens21 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x25));//KingVulture
+	vars.SandboxTokens22 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x26));//SmallCentipede
+	//vars.SandboxTokens23 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x27));//MediumCentipede --UNUSED
+	vars.SandboxTokens24 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x28));//BigCentipede
+	vars.SandboxTokens25 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x29));//RedCentipede
+	vars.SandboxTokens26 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2A));//Centiwing
+	vars.SandboxTokens27 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2B));//Tubeworm
+	vars.SandboxTokens28 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2C));//Hazer
+	vars.SandboxTokens29 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2D));//LanternMouse
+	vars.SandboxTokens30 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2E));//Spider
+	vars.SandboxTokens31 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x2F));//BigSpider
+	vars.SandboxTokens32 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x30));//SpitterSpider
+	vars.SandboxTokens33 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x31));//MirosBird
+	vars.SandboxTokens34 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x32));//BrotherLongLegs
+	vars.SandboxTokens35 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x33));//DaddyLongLegs
+	vars.SandboxTokens36 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x34));//Deer
+	vars.SandboxTokens37 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x35));//EggBug
+	vars.SandboxTokens38 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x36));//Dropbug
+	vars.SandboxTokens39 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x37));//BigNeedleWorm
+	//vars.SandboxTokens40 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x38));//SmallNeedleWorm --UNUSED
+	vars.SandboxTokens41 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x39));//Jetfish
+	vars.SandboxTokens42 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3A));//BigEel
+	//vars.SandboxTokens43 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3B));//Rock --UNUSED
+	//vars.SandboxTokens44 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3C));//Spear --UNUSED
+	vars.SandboxTokens45 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3D));//FireSpear
+	vars.SandboxTokens46 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3E));//ScavengerBomb
+	vars.SandboxTokens47 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x3F));//SporePlant
+	vars.SandboxTokens48 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x40));//Lantern
+	vars.SandboxTokens49 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x41));//FlyLure
+	vars.SandboxTokens50 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x42));//Mushroom
+	vars.SandboxTokens51 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x43));//FlareBomb
+	vars.SandboxTokens52 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x44));//PuffBall
+	vars.SandboxTokens53 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x45));//WaterNut
+	vars.SandboxTokens54 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x46));//FirecrackerPlant
+	vars.SandboxTokens55 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x47));//DangleFruit
+	vars.SandboxTokens56 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x48));//JellyFish
+	vars.SandboxTokens57 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x49));//BubbleGrass
+	vars.SandboxTokens58 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x4A));//SlimeMold
+	
+	//vars.LevelTokens00 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x00));//Default --UNUSED
+	//vars.LevelTokens01 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x01));//Hidden --UNUSED?
+	vars.LevelTokens02 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x02));//SU
+	vars.LevelTokens03 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x03));//HI
+	vars.LevelTokens04 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x04));//CC
+	vars.LevelTokens05 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x05));//GW
+	vars.LevelTokens06 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x06));//SL
+	vars.LevelTokens07 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x07));//SH
+	vars.LevelTokens08 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x08));//DS
+	vars.LevelTokens09 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x09));//SI
+	vars.LevelTokens10 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x0A));//LF
+	vars.LevelTokens11 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x0B));//UW
+	vars.LevelTokens12 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x0C));//SB
+	vars.LevelTokens13 = new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x14, 0x10+0x0D));//SS
+	
+	//vars.SandboxTokens = new MemoryWatcher<byte[10]>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x10));
+    //vars.LevelTokens = new MemoryWatcher<byte[10]>(new DeepPointer(  (IntPtr)rw + 0x18, 0x14, 0x14, 0x10));
+	
 	vars.ingameWatchers = new MemoryWatcherList() {
 		vars.roomName,
 		vars.gateMode,
@@ -327,7 +481,84 @@ init {
 		vars.moonNeuronsGiven,
 		vars.karmaCap,
 		vars.voidSeaMode,
+		//vars.SandboxTokens00,
+		//vars.SandboxTokens01,
+		//vars.SandboxTokens02,
+		vars.SandboxTokens03,
+		vars.SandboxTokens04,
+		vars.SandboxTokens05,
+		vars.SandboxTokens06,
+		vars.SandboxTokens07,
+		vars.SandboxTokens08,
+		vars.SandboxTokens09,
+		//vars.SandboxTokens10,
+		vars.SandboxTokens11,
+		//vars.SandboxTokens12,
+		vars.SandboxTokens13,
+		vars.SandboxTokens14,
+		vars.SandboxTokens15,
+		vars.SandboxTokens16,
+		vars.SandboxTokens17,
+		vars.SandboxTokens18,
+		vars.SandboxTokens19,
+		vars.SandboxTokens20,
+		vars.SandboxTokens21,
+		vars.SandboxTokens22,
+		//vars.SandboxTokens23,
+		vars.SandboxTokens24,
+		vars.SandboxTokens25,
+		vars.SandboxTokens26,
+		vars.SandboxTokens27,
+		vars.SandboxTokens28,
+		vars.SandboxTokens29,
+		vars.SandboxTokens30,
+		vars.SandboxTokens31,
+		vars.SandboxTokens32,
+		vars.SandboxTokens33,
+		vars.SandboxTokens34,
+		vars.SandboxTokens35,
+		vars.SandboxTokens36,
+		vars.SandboxTokens37,
+		vars.SandboxTokens38,
+		vars.SandboxTokens39,
+		//vars.SandboxTokens40,
+		vars.SandboxTokens41,
+		vars.SandboxTokens42,
+		//vars.SandboxTokens43,
+		//vars.SandboxTokens44,
+		vars.SandboxTokens45,
+		vars.SandboxTokens46,
+		vars.SandboxTokens47,
+		vars.SandboxTokens48,
+		vars.SandboxTokens49,
+		vars.SandboxTokens50,
+		vars.SandboxTokens51,
+		vars.SandboxTokens52,
+		vars.SandboxTokens53,
+		vars.SandboxTokens54,
+		vars.SandboxTokens55,
+		vars.SandboxTokens56,
+		vars.SandboxTokens57,
+		vars.SandboxTokens58,
+		//vars.LevelTokens00,
+		//vars.LevelTokens01,
+		vars.LevelTokens02,
+		vars.LevelTokens03,
+		vars.LevelTokens04,
+		vars.LevelTokens05,
+		vars.LevelTokens06,
+		vars.LevelTokens07,
+		vars.LevelTokens08,
+		vars.LevelTokens09,
+		vars.LevelTokens10,
+		vars.LevelTokens11,
+		vars.LevelTokens12,
+		vars.LevelTokens13
 		};
+	
+	//for(int i = 0; i < 10; i++) {
+	//	vars.ingameWatchers.Add(new MemoryWatcher<bool>(new DeepPointer((IntPtr)rw + 0x18, 0x14, 0x18, 0x10+i)));
+	//}
 	
 	
 	// Room visited status (so we don't count them twice)
@@ -477,7 +708,7 @@ update {
 	
 	//var igt = current.IGT;
 	//vars.Log("Current Time: " + current.IGT);
-	
+		
 }
 
 start {
@@ -619,6 +850,380 @@ split {
 	if(vars.ascended.Changed && vars.ascended.Current == true){
 		vars.ascended.Update(game);
 		if(settings["ascended"]){
+			return true;
+		}
+	}
+	
+	//ARENA UNLOCKS
+	if( (vars.SandboxTokens03.Changed && vars.SandboxTokens03.Current == true)) {
+		vars.SandboxTokens03.Update(game);
+		if(settings["BlueLizard"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens04.Changed && vars.SandboxTokens04.Current == true)) {
+		vars.SandboxTokens04.Update(game);
+		if(settings["WhiteLizard"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens05.Changed && vars.SandboxTokens05.Current == true)) {
+		vars.SandboxTokens05.Update(game);
+		if(settings["BlackLizard"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens06.Changed && vars.SandboxTokens06.Current == true)) {
+		vars.SandboxTokens06.Update(game);
+		if(settings["YellowLizard"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens07.Changed && vars.SandboxTokens07.Current == true)) {
+		vars.SandboxTokens07.Update(game);
+		if(settings["CyanLizard"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens08.Changed && vars.SandboxTokens08.Current == true)) {
+		vars.SandboxTokens08.Update(game);
+		if(settings["RedLizard"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens09.Changed && vars.SandboxTokens09.Current == true)) {
+		vars.SandboxTokens09.Update(game);
+		if(settings["Salamander"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens11.Changed && vars.SandboxTokens11.Current == true)) {
+		vars.SandboxTokens11.Update(game);
+		if(settings["CicadaA"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens13.Changed && vars.SandboxTokens13.Current == true)) {
+		vars.SandboxTokens13.Update(game);
+		if(settings["Snail"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens14.Changed && vars.SandboxTokens14.Current == true)) {
+		vars.SandboxTokens14.Update(game);
+		if(settings["Leech"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens15.Changed && vars.SandboxTokens15.Current == true)) {
+		vars.SandboxTokens15.Update(game);
+		if(settings["SeaLeech"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens16.Changed && vars.SandboxTokens16.Current == true)) {
+		vars.SandboxTokens16.Update(game);
+		if(settings["PoleMimic"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens17.Changed && vars.SandboxTokens17.Current == true)) {
+		vars.SandboxTokens17.Update(game);
+		if(settings["TentaclePlant"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens18.Changed && vars.SandboxTokens18.Current == true)) {
+		vars.SandboxTokens18.Update(game);
+		if(settings["Scavenger"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens19.Changed && vars.SandboxTokens19.Current == true)) {
+		vars.SandboxTokens19.Update(game);
+		if(settings["VultureGrub"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens20.Changed && vars.SandboxTokens20.Current == true)) {
+		vars.SandboxTokens20.Update(game);
+		if(settings["Vulture"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens21.Changed && vars.SandboxTokens21.Current == true)) {
+		vars.SandboxTokens21.Update(game);
+		if(settings["KingVulture"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens22.Changed && vars.SandboxTokens22.Current == true)) {
+		vars.SandboxTokens22.Update(game);
+		if(settings["MediumCentipede"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens24.Changed && vars.SandboxTokens24.Current == true)) {
+		vars.SandboxTokens24.Update(game);
+		if(settings["BigCentipede"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens25.Changed && vars.SandboxTokens25.Current == true)) {
+		vars.SandboxTokens25.Update(game);
+		if(settings["RedCentipede"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens26.Changed && vars.SandboxTokens26.Current == true)) {
+		vars.SandboxTokens26.Update(game);
+		if(settings["Centiwing"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens27.Changed && vars.SandboxTokens27.Current == true)) {
+		vars.SandboxTokens27.Update(game);
+		if(settings["TubeWorm"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens28.Changed && vars.SandboxTokens28.Current == true)) {
+		vars.SandboxTokens28.Update(game);
+		if(settings["Hazer"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens29.Changed && vars.SandboxTokens29.Current == true)) {
+		vars.SandboxTokens29.Update(game);
+		if(settings["LanternMouse"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens30.Changed && vars.SandboxTokens30.Current == true)) {
+		vars.SandboxTokens30.Update(game);
+		if(settings["Spider"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens31.Changed && vars.SandboxTokens31.Current == true)) {
+		vars.SandboxTokens31.Update(game);
+		if(settings["BigSpider"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens32.Changed && vars.SandboxTokens32.Current == true)) {
+		vars.SandboxTokens32.Update(game);
+		if(settings["SpitterSpider"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens33.Changed && vars.SandboxTokens33.Current == true)) {
+		vars.SandboxTokens33.Update(game);
+		if(settings["MirosBird"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens34.Changed && vars.SandboxTokens34.Current == true)) {
+		vars.SandboxTokens34.Update(game);
+		if(settings["BrotherLongLegs"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens35.Changed && vars.SandboxTokens35.Current == true)) {
+		vars.SandboxTokens35.Update(game);
+		if(settings["DaddyLongLegs"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens36.Changed && vars.SandboxTokens36.Current == true)) {
+		vars.SandboxTokens36.Update(game);
+		if(settings["Deer"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens37.Changed && vars.SandboxTokens37.Current == true)) {
+		vars.SandboxTokens37.Update(game);
+		if(settings["EggBug"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens38.Changed && vars.SandboxTokens38.Current == true)) {
+		vars.SandboxTokens38.Update(game);
+		if(settings["Dropbug"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens39.Changed && vars.SandboxTokens39.Current == true)) {
+		vars.SandboxTokens39.Update(game);
+		if(settings["BigNeedleWorm"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens41.Changed && vars.SandboxTokens41.Current == true)) {
+		vars.SandboxTokens41.Update(game);
+		if(settings["Jetfish"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens42.Changed && vars.SandboxTokens42.Current == true)) {
+		vars.SandboxTokens42.Update(game);
+		if(settings["BigEel"] || settings["All unlocks"] || settings["All hunter sandbox"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens45.Changed && vars.SandboxTokens45.Current == true)) {
+		vars.SandboxTokens45.Update(game);
+		if(settings["FireSpear"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens46.Changed && vars.SandboxTokens46.Current == true)) {
+		vars.SandboxTokens46.Update(game);
+		if(settings["ScavengerBomb"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens47.Changed && vars.SandboxTokens47.Current == true)) {
+		vars.SandboxTokens47.Update(game);
+		if(settings["SporePlant"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens48.Changed && vars.SandboxTokens48.Current == true)) {
+		vars.SandboxTokens48.Update(game);
+		if(settings["Lantern"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens49.Changed && vars.SandboxTokens49.Current == true)) {
+		vars.SandboxTokens49.Update(game);
+		if(settings["FlyLure"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens50.Changed && vars.SandboxTokens50.Current == true)) {
+		vars.SandboxTokens50.Update(game);
+		if(settings["Mushroom"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens51.Changed && vars.SandboxTokens51.Current == true)) {
+		vars.SandboxTokens51.Update(game);
+		if(settings["FlareBomb"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens52.Changed && vars.SandboxTokens52.Current == true)) {
+		vars.SandboxTokens52.Update(game);
+		if(settings["Puffball"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens53.Changed && vars.SandboxTokens53.Current == true)) {
+		vars.SandboxTokens53.Update(game);
+		if(settings["Waternut"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens54.Changed && vars.SandboxTokens54.Current == true)) {
+		vars.SandboxTokens54.Update(game);
+		if(settings["FirecrackerPlant"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens55.Changed && vars.SandboxTokens55.Current == true)) {
+		vars.SandboxTokens55.Update(game);
+		if(settings["DangleFruit"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens56.Changed && vars.SandboxTokens56.Current == true)) {
+		vars.SandboxTokens56.Update(game);
+		if(settings["JellyFish"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens57.Changed && vars.SandboxTokens57.Current == true)) {
+		vars.SandboxTokens57.Update(game);
+		if(settings["BubbleGrass"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.SandboxTokens58.Changed && vars.SandboxTokens58.Current == true)) {
+		vars.SandboxTokens58.Update(game);
+		if(settings["SlimeMold"] || settings["All unlocks"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens02.Changed && vars.LevelTokens02.Current == true)) {
+		vars.LevelTokens02.Update(game);
+		if(settings["SU_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens03.Changed && vars.LevelTokens03.Current == true)) {
+		vars.LevelTokens03.Update(game);
+		if(settings["HI_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens04.Changed && vars.LevelTokens04.Current == true)) {
+		vars.LevelTokens04.Update(game);
+		if(settings["CC_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens05.Changed && vars.LevelTokens05.Current == true)) {
+		vars.LevelTokens05.Update(game);
+		if(settings["GW_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens06.Changed && vars.LevelTokens06.Current == true)) {
+		vars.LevelTokens06.Update(game);
+		if(settings["SL_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens07.Changed && vars.LevelTokens07.Current == true)) {
+		vars.LevelTokens07.Update(game);
+		if(settings["SH_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens08.Changed && vars.LevelTokens08.Current == true)) {
+		vars.LevelTokens08.Update(game);
+		if(settings["DS_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens09.Changed && vars.LevelTokens09.Current == true)) {
+		vars.LevelTokens09.Update(game);
+		if(settings["SI_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens10.Changed && vars.LevelTokens10.Current == true)) {
+		vars.LevelTokens10.Update(game);
+		if(settings["LF_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens11.Changed && vars.LevelTokens11.Current == true)) {
+		vars.LevelTokens11.Update(game);
+		if(settings["UW_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens12.Changed && vars.LevelTokens12.Current == true)) {
+		vars.LevelTokens12.Update(game);
+		if(settings["SB_Token"] || settings["All unlocks"] || settings["All levels"]){
+			return true;
+		}
+	}
+	if( (vars.LevelTokens13.Changed && vars.LevelTokens13.Current == true)) {
+		vars.LevelTokens13.Update(game);
+		if(settings["SS_Token"] || settings["All unlocks"] || settings["All levels"]){
 			return true;
 		}
 	}
